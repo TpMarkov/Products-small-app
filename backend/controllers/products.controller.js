@@ -1,4 +1,5 @@
 import Product from "../models/product.model.js";
+import mongoose from "mongoose";
 
 export const createNewProduct = async (req, res) => {
   const product = req.body; // this is the data that user is sending us in his request;
@@ -31,6 +32,10 @@ export const createNewProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
+  if (!mongoose.Types.ObjectId(id)) {
+    res.status(500).json({ message: `Invalid Id` });
+  }
+
   try {
     await Product.findByIdAndDelete(id);
     res
@@ -40,7 +45,7 @@ export const deleteProduct = async (req, res) => {
     console.log(`Error: ${error.message}`);
     res.status(500).json({
       success: false,
-      message: "Error deleting product. Product not found!",
+      message: "Server Error",
     });
   }
 };
