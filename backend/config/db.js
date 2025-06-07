@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
+// Here we use connectDB to connect our nodeJS with the DB => this function is called in the server.js imediatly after the server has been started
+
 dotenv.config();
 
 export const connectDB = async () => {
